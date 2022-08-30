@@ -2,6 +2,7 @@
 import os , sys
 import pandas as pd
 import numpy as np
+import cv2
 
 def makefiles(path,filename):
     os.makedirs(path + "/" + filename ,exist_ok=True)
@@ -11,6 +12,17 @@ def InputData(path):
     print("Detect Input Data")
     df = pd.read_csv(path)
     return df
+
+def sep_space(df):
+    txtstring = str(df["R"][0]) + " " + str(df["G"][0]) + " " + str(df["B"][0]) + "\n"
+    for i in range(len(df)):
+        if i >= 1:
+            txtstring += str(df["R"][i]) + " " + str(df["G"][i]) + " " + str(df["B"][i]) + "\n"
+    f = open(savepath + "/conv_RBF.txt", "w")
+    f.write(txtstring)
+    f.close()
+
+
 
 # return is not , but save performance
 def Gamma1(input_dict,param):
@@ -24,6 +36,8 @@ def Gamma1(input_dict,param):
         o_color = np.trunc(max_format*(color/max_format)**param).astype("int")
         df_output["{}".format(c)] = o_color
     df_output.to_csv(savepath + "/conv_RBF.csv")
+    sep_space(df_output)
+
 
 def Gamma2(input_dict,param):
     RGB = ["R","G","B"]
@@ -36,6 +50,7 @@ def Gamma2(input_dict,param):
         o_color = np.trunc(max_format*(1-color/max_format)**param).astype("int")
         df_output["{}".format(c)] = o_color
     df_output.to_csv(savepath + "/conv_RBF.csv")
+    sep_space(df_output)
 
 def Gamma3(input_dict,param1,param2):
     RGB = ["R","G","B"]
@@ -48,11 +63,15 @@ def Gamma3(input_dict,param1,param2):
         o_color = np.trunc(max_format-max_format*(1-(color/max_format)**param1)**param2).astype("int")
         df_output["{}".format(c)] = o_color
     df_output.to_csv(savepath + "/conv_RBF.csv")
+    sep_space(df_output)
+
 
 if __name__ == "__main__":
     init_path = os.getcwd()
     input_path = init_path + "/input_data.csv"
     input_dict = InputData(input_path)
+    bat_file = "\n"
+
 
     makefiles(init_path,"Gamma1")
     gamma1_path = init_path + "/Gamma1"
@@ -61,6 +80,7 @@ if __name__ == "__main__":
         makefiles(gamma1_path,str(i))
         savepath = gamma1_path + "/" + str(i)
         Gamma1(input_dict,i)
+        bat_file += "convert_color.exe chart_1_input.tif "+savepath+"/output.bmp "+savepath+"/conv_RBF.txt\n"
     print("###FIN GAMMA1###")
 
     makefiles(init_path,"Gamma2")
@@ -70,6 +90,7 @@ if __name__ == "__main__":
         makefiles(gamma2_path,str(i))
         savepath = gamma2_path + "/" + str(i)
         Gamma2(input_dict,i)
+        bat_file += "convert_color.exe chart_1_input.tif "+savepath+"/output.bmp "+savepath+"/conv_RBF.txt\n"
     print("###FIN GAMMA2###")
 
     makefiles(init_path,"Gamma3")
@@ -82,5 +103,10 @@ if __name__ == "__main__":
         makefiles(gamma3_path,str(i))
         savepath = gamma3_path + "/" + str(i)
         Gamma3(input_dict,gamma3_param1[count],gamma3_param2[count])
+        bat_file += "convert_color.exe chart_1_input.tif "+savepath+"/output.bmp "+savepath+"/conv_RBF.txt\n"
         count+=1
     print("###FIN gamma3###")
+    f = open(init_path + "/henkan.txt", "w")
+    f.write(bat_file)
+    f.close()
+
