@@ -1,31 +1,86 @@
 # やるべきことは簡潔に無駄なことはしない
 import os , sys
 import pandas as pd
+import numpy as np
+
+def makefiles(path,filename):
+    os.makedirs(path + "/" + filename ,exist_ok=True)
+
 
 def InputData(path):
     print("Detect Input Data")
     df = pd.read_csv(path)
-    #R = df["R"]
-    #G = df["G"]
-    #B = df["B"]
     return df
 
-# return is Output Dict
+# return is not , but save performance
 def Gamma1(input_dict,param):
+    RGB = ["R","G","B"]
+    max_format = 255
     df_output = pd.DataFrame()
     print("###GAMMA 1###")
     print("\t--",param)
-    
-    return df_output
-    a=0
+    for c in RGB:
+        color = np.array(input_dict["{}".format(c)])
+        o_color = np.trunc(max_format*(color/max_format)**param).astype("int")
+        df_output["{}".format(c)] = o_color
+    df_output.to_csv(savepath + "/conv_RBF.csv")
 
-    #ROUND(255*(A4/255)^$G$3,0)
+def Gamma2(input_dict,param):
+    RGB = ["R","G","B"]
+    max_format = 255
+    df_output = pd.DataFrame()
+    print("###GAMMA 1###")
+    print("\t--",param)
+    for c in RGB:
+        color = np.array(input_dict["{}".format(c)])
+        o_color = np.trunc(max_format*(1-color/max_format)**param).astype("int")
+        df_output["{}".format(c)] = o_color
+    df_output.to_csv(savepath + "/conv_RBF.csv")
+
+def Gamma3(input_dict,param1,param2):
+    RGB = ["R","G","B"]
+    max_format = 255
+    df_output = pd.DataFrame()
+    print("###GAMMA 1###")
+    print("\t--",param1,param2)
+    for c in RGB:
+        color = np.array(input_dict["{}".format(c)])
+        o_color = np.trunc(max_format-max_format*(1-(color/max_format)**param1)**param2).astype("int")
+        df_output["{}".format(c)] = o_color
+    df_output.to_csv(savepath + "/conv_RBF.csv")
 
 if __name__ == "__main__":
     init_path = os.getcwd()
     input_path = init_path + "/input_data.csv"
     input_dict = InputData(input_path)
 
+    makefiles(init_path,"Gamma1")
+    gamma1_path = init_path + "/Gamma1"
     gamma1_param = [0.1 , 0.2 , 0.3 , 0.4 , 0.5 , 0.6 , 0.7 ,0.8]
     for i in gamma1_param:
+        makefiles(gamma1_path,str(i))
+        savepath = gamma1_path + "/" + str(i)
         Gamma1(input_dict,i)
+    print("###FIN GAMMA1###")
+
+    makefiles(init_path,"Gamma2")
+    gamma2_path = init_path + "/gamma2"
+    gamma2_param = [0.5 , 0.7 , 0.8 , 0.9 , 1.0 , 1.1 , 1.2 ,1.3]
+    for i in gamma2_param:
+        makefiles(gamma2_path,str(i))
+        savepath = gamma2_path + "/" + str(i)
+        Gamma2(input_dict,i)
+    print("###FIN GAMMA2###")
+
+    makefiles(init_path,"Gamma3")
+    gamma3_path = init_path + "/gamma3"
+    gamma3_param1 = [0.2 , 0.3 , 0.4 , 0.5 , 0.6 , 0.7 , 0.8 , 0.9]
+    gamma3_param2 = [0.224 , 0.336 , 0.448 , 0.56 , 0.672 , 0.784 , 0.896 ,1.008]
+
+    count = 0
+    for i in gamma3_param1:
+        makefiles(gamma3_path,str(i))
+        savepath = gamma3_path + "/" + str(i)
+        Gamma3(input_dict,gamma3_param1[count],gamma3_param2[count])
+        count+=1
+    print("###FIN gamma3###")
