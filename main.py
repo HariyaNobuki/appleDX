@@ -1,4 +1,4 @@
-# やるべきことは簡潔に無駄なことはしない
+# if_gamma
 import os , sys
 import pandas as pd
 import numpy as np
@@ -75,7 +75,7 @@ if __name__ == "__main__":
 
     makefiles(init_path,"Gamma1")
     gamma1_path = init_path + "/Gamma1"
-    gamma1_param = [0.1 , 0.2 , 0.3 , 0.4 , 0.5 , 0.6 , 0.7 ,0.8]
+    gamma1_param = [0.1 , 0.2 , 0.3 , 0.4 , 0.5 , 0.6 , 0.7 ,0.8, 0.9]
     for i in gamma1_param:
         makefiles(gamma1_path,str(i))
         savepath = gamma1_path + "/" + str(i)
@@ -85,7 +85,7 @@ if __name__ == "__main__":
 
     makefiles(init_path,"Gamma2")
     gamma2_path = init_path + "/gamma2"
-    gamma2_param = [0.5 , 0.7 , 0.8 , 0.9 , 1.0 , 1.1 , 1.2 ,1.3]
+    gamma2_param = [1.1,1.2,1.3,1.4,1.5,1.6]
     for i in gamma2_param:
         makefiles(gamma2_path,str(i))
         savepath = gamma2_path + "/" + str(i)
@@ -95,8 +95,8 @@ if __name__ == "__main__":
 
     makefiles(init_path,"Gamma3")
     gamma3_path = init_path + "/gamma3"
-    gamma3_param1 = [0.2 , 0.3 , 0.4 , 0.5 , 0.6 , 0.7 , 0.8 , 0.9]
-    gamma3_param2 = [0.224 , 0.336 , 0.448 , 0.56 , 0.672 , 0.784 , 0.896 ,1.008]
+    gamma3_param1 = [0.2 , 0.3 , 0.4 , 0.5 , 0.6 , 0.7 , 0.8 , 0.9,2.0]
+    gamma3_param2 = [0.224 , 0.336 , 0.448 , 0.56 , 0.672 , 0.784 , 0.896 ,1.008,2.4]
 
     count = 0
     for i in gamma3_param1:
