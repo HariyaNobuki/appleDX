@@ -53,28 +53,28 @@ def Gamma1(input_dict,param):
         o_color = np.trunc(max_format*(S[i]/max_format)**param).astype("int")
 
         if max_ind == 0:
-            R[i] += (1/2)*o_color
+            R[i] += (1/4)*o_color
             if R[i] > 255:
                 R[i] = 255
         elif max_ind == 1:
-            G[i] += (1/2)*o_color
+            G[i] += (1/4)*o_color
             if G[i] > 255:
                 G[i] = 255
         elif max_ind == 2:
-            B[i] += (1/2)*o_color
+            B[i] += (1/4)*o_color
             if B[i] > 255:
                 B[i] = 255
 
         if min_ind == 0:
-            R[i] -= (1/2)*o_color
+            R[i] -= (1/4)*o_color
             if R[i] < 0:
                 R[i] = 0
         elif min_ind == 1:
-            G[i] -= (1/2)*o_color
+            G[i] -= (1/4)*o_color
             if G[i] < 0:
                 G[i] = 0
         elif min_ind == 2:
-            B[i] -= (1/2)*o_color
+            B[i] -= (1/4)*o_color
             if B[i] < 0:
                 B[i] = 0
     df_output["R"] = R
@@ -105,28 +105,28 @@ def Gamma2(input_dict,param):
         o_color = np.trunc(max_format*(1-(1-S[i]/max_format)**param)).astype("int")
 
         if max_ind == 0:
-            R[i] += (1/2)*o_color
+            R[i] += (1/4)*o_color
             if R[i] > 255:
                 R[i] = 255
         elif max_ind == 1:
-            G[i] += (1/2)*o_color
+            G[i] += (1/4)*o_color
             if G[i] > 255:
                 G[i] = 255
         elif max_ind == 2:
-            B[i] += (1/2)*o_color
+            B[i] += (1/4)*o_color
             if B[i] > 255:
                 B[i] = 255
 
         if min_ind == 0:
-            R[i] -= (1/2)*o_color
+            R[i] -= (1/4)*o_color
             if R[i] < 0:
                 R[i] = 0
         elif min_ind == 1:
-            G[i] -= (1/2)*o_color
+            G[i] -= (1/4)*o_color
             if G[i] < 0:
                 G[i] = 0
         elif min_ind == 2:
-            B[i] -= (1/2)*o_color
+            B[i] -= (1/4)*o_color
             if B[i] < 0:
                 B[i] = 0
     df_output["R"] = R
@@ -159,35 +159,35 @@ if __name__ == "__main__":
 
     makefiles(init_path,"Gamma1")
     gamma1_path = init_path + "/Gamma1"
-    gamma1_param = [0.1 , 0.2 , 0.3 , 0.4 , 0.5 , 0.6 , 0.7 ,0.8, 0.9]
+    gamma1_param = [0.2,0.4,0.6,0.8,1.0,1.2,1.4,1.6,1.8]
     for i in gamma1_param:
         makefiles(gamma1_path,str(i))
         savepath = gamma1_path + "/" + str(i)
         Gamma1(input_dict,i)
-        bat_file += "convert_color.exe chart_6_input-col.tif "+savepath+"/output.jpg "+savepath+"/conv_RBF.txt\n"
+        bat_file += "convert_color.exe chart_1_input.tif "+savepath+"/output.bmp "+savepath+"/conv_RBF.txt\n"
     print("###FIN GAMMA1###")
 
     makefiles(init_path,"Gamma2")
     gamma2_path = init_path + "/gamma2"
-    gamma2_param = [1.1,1.2,1.3,1.4,1.5,1.6]
+    gamma2_param = [0.2,0.4,0.6,0.8,1.0,1.2,1.4,1.6,1.8]
     for i in gamma2_param:
         makefiles(gamma2_path,str(i))
         savepath = gamma2_path + "/" + str(i)
         Gamma2(input_dict,i)
-        bat_file += "convert_color.exe chart_6_input-col.tif "+savepath+"/output.jpg "+savepath+"/conv_RBF.txt\n"
+        bat_file += "convert_color.exe chart_1_input.tif "+savepath+"/output.bmp "+savepath+"/conv_RBF.txt\n"
     print("###FIN GAMMA2###")
 
     makefiles(init_path,"Gamma3")
     gamma3_path = init_path + "/gamma3"
-    gamma3_param1 = [0.2 , 0.3 , 0.4 , 0.5 , 0.6 , 0.7 , 0.8 , 0.9,2.0]
-    gamma3_param2 = [0.224 , 0.336 , 0.448 , 0.56 , 0.672 , 0.784 , 0.896 ,1.008,2.4]
+    gamma3_param1 =[0.2,0.4,0.6,0.8,1.0,1.2,1.4,1.6,1.8]
+    gamma3_param2 =[0.224,0.448,0.672,0.896 ,1.008,1.344,1.568,1.792,2.016]
 
     count = 0
     for i in gamma3_param1:
         makefiles(gamma3_path,str(i))
         savepath = gamma3_path + "/" + str(i)
         Gamma3(input_dict,gamma3_param1[count],gamma3_param2[count])
-        bat_file += "convert_color.exe chart_6_input-col.tif "+savepath+"/output.jpg "+savepath+"/conv_RBF.txt\n"
+        bat_file += "convert_color.exe chart_1_input.tif "+savepath+"/output.bmp "+savepath+"/conv_RBF.txt\n"
         count+=1
     print("###FIN gamma3###")
     f = open(init_path + "/henkan.txt", "w")
