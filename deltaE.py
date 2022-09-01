@@ -43,7 +43,7 @@ if __name__ == "__main__":
     ErrorAnalysis = anaE(input_E)
 
     gamma1_path = init_path + "/Gamma1"
-    gamma1_param = [0.1 , 0.2 , 0.3 , 0.4 , 0.5 , 0.6 , 0.7 ,0.8]
+    gamma1_param = [0.1 , 0.2 , 0.3 , 0.4 , 0.5 , 0.6 , 0.7 ,0.8,1.1,1.2,1.3,1.4,1.5,1.6,1.7,1.8]
 
     for i in gamma1_param:
         savepath = gamma1_path + "/" + str(i)
@@ -56,7 +56,7 @@ if __name__ == "__main__":
 
 
     gamma2_path = init_path + "/gamma2"
-    gamma2_param = [0.5 , 0.7 , 0.8 , 0.9 , 1.0 , 1.1 , 1.2 ,1.3]
+    gamma2_param = [0.2,0.3,0.4,0.5,0.7,0.8,0.9,1.0,1.1,1.2,1.3]
     for i in gamma2_param:
         savepath = gamma2_path + "/" + str(i)
         com_Lab = pd.read_csv(savepath + "/point_rbf.csv")
@@ -67,8 +67,8 @@ if __name__ == "__main__":
     print("###FIN gamma2###")
 
     gamma3_path = init_path + "/gamma3"
-    gamma3_param1 = [0.2 , 0.3 , 0.4 , 0.5 , 0.6 , 0.7 , 0.8 , 0.9]
-    gamma3_param2 = [0.224 , 0.336 , 0.448 , 0.56 , 0.672 , 0.784 , 0.896 ,1.008]
+    gamma3_param1 = [0.2 , 0.3 , 0.4 , 0.5 , 0.6 , 0.7 , 0.8 , 0.9,2.0]
+    gamma3_param2 = [0.224 , 0.336 , 0.448 , 0.56 , 0.672 , 0.784 , 0.896 ,1.008,2.4]
     for i in gamma3_param1:
         savepath = gamma3_path + "/" + str(i)
         com_Lab = pd.read_csv(savepath + "/point_rbf.csv")
