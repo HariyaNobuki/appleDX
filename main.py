@@ -4,9 +4,9 @@ import pandas as pd
 import numpy as np
 import cv2
 
+# 今回はこのファイル変換だけはいらない
 def makefiles(path,filename):
     os.makedirs(path + "/" + filename ,exist_ok=True)
-
 
 def InputData(path):
     print("Detect Input Data")
