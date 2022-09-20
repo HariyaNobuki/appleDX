@@ -89,7 +89,7 @@ def Gamma2(input_dict,param):
     max_format = 255
     S = np.array(getS_MINMAX(input_dict))
     df_output = pd.DataFrame()
-    print("###GAMMA 1###")
+    print("###GAMMA 2###")
     print("\t--",param)
     # ここの書き方変更する
     R = np.array(input_dict["R"])
@@ -140,7 +140,7 @@ def Gamma3(input_dict,param1,param2):
     RGB = ["R","G","B"]
     max_format = 255
     df_output = pd.DataFrame()
-    print("###GAMMA 1###")
+    print("###GAMMA 3###")
     print("\t--",param1,param2)
     for c in RGB:
         color = np.array(input_dict["{}".format(c)])
@@ -159,22 +159,24 @@ if __name__ == "__main__":
 
     makefiles(init_path,"Gamma1")
     gamma1_path = init_path + "/Gamma1"
-    gamma1_param = [0.2,0.4,0.6,0.8,1.0,1.2,1.4,1.6,1.8]
+    gamma1_param = [0.01*i for i in range(500)]
+    gamma1_param = np.round(gamma1_param , 2)
     for i in gamma1_param:
         makefiles(gamma1_path,str(i))
         savepath = gamma1_path + "/" + str(i)
         Gamma1(input_dict,i)
-        bat_file += "convert_color.exe hanabi_def.jpg "+savepath+"/output.jpg "+savepath+"/conv_RBF.txt\n"
+        bat_file += "convert_color.exe beer_def.jpg "+savepath+"/output.bmp "+savepath+"/conv_RBF.txt\n"
     print("###FIN GAMMA1###")
 
     makefiles(init_path,"Gamma2")
     gamma2_path = init_path + "/gamma2"
-    gamma2_param = [0.2,0.4,0.6,0.8,1.0,1.2,1.4,1.6,1.8]
+    gamma2_param = [0.01*i for i in range(500)]
+    gamma2_param = np.round(gamma2_param , 2)
     for i in gamma2_param:
         makefiles(gamma2_path,str(i))
         savepath = gamma2_path + "/" + str(i)
         Gamma2(input_dict,i)
-        bat_file += "convert_color.exe hanabi_def.jpg "+savepath+"/output.bmp "+savepath+"/conv_RBF.txt\n"
+        bat_file += "convert_color.exe beer_def.jpg "+savepath+"/output.bmp "+savepath+"/conv_RBF.txt\n"
     print("###FIN GAMMA2###")
 
     makefiles(init_path,"Gamma3")
@@ -182,12 +184,16 @@ if __name__ == "__main__":
     gamma3_param1 =[0.2,0.4,0.6,0.8,1.0,1.2,1.4,1.6,1.8]
     gamma3_param2 =[0.224,0.448,0.672,0.896 ,1.008,1.344,1.568,1.792,2.016]
 
+    gamma3_param1 = [0.01*i for i in range(500)]
+    gamma3_param2 = [0.01*i*(0.224/0.2) for i in range(500)]
+    gamma3_param1 = np.round(gamma3_param1 , 2)
+
     count = 0
     for i in gamma3_param1:
         makefiles(gamma3_path,str(i))
         savepath = gamma3_path + "/" + str(i)
         Gamma3(input_dict,gamma3_param1[count],gamma3_param2[count])
-        bat_file += "convert_color.exe hanabi_def.jpg "+savepath+"/output.bmp "+savepath+"/conv_RBF.txt\n"
+        bat_file += "convert_color.exe beer_def.jpg "+savepath+"/output.bmp "+savepath+"/conv_RBF.txt\n"
         count+=1
     print("###FIN gamma3###")
     f = open(init_path + "/henkan.txt", "w")
