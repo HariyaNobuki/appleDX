@@ -11,7 +11,7 @@ if __name__ == "__main__":
     bat_file = "\n"
 
     # Gamma1
-    size=(900,600)
+    size=(1200,901)
     fourcc = cv2.VideoWriter_fourcc(*'MJPG')
     save = cv2.VideoWriter('gamma1.avi',fourcc,70,size)#動画を保存する形を作成
 
@@ -21,7 +21,7 @@ if __name__ == "__main__":
     gamma1_param = np.round(gamma1_param , 2)
 
     for i in gamma1_param:
-        img=gamma1_path+"/"+str(i)+"/output.bmp"
+        img=gamma1_path+"/"+str(i)+"/output_txt.bmp"
         img=cv2.imread(img)
         img=cv2.resize(img,size)
         save.write(img)
@@ -37,7 +37,7 @@ if __name__ == "__main__":
     gamma1_param = np.round(gamma1_param , 2)
 
     for i in gamma1_param:
-        img=gamma1_path+"/"+str(i)+"/output.bmp"
+        img=gamma1_path+"/"+str(i)+"/output_txt.bmp"
         img=cv2.imread(img)
         img=cv2.resize(img,size)
         save.write(img)
@@ -53,7 +53,7 @@ if __name__ == "__main__":
     gamma1_param = np.round(gamma1_param , 2)
 
     for i in gamma1_param:
-        img=gamma1_path+"/"+str(i)+"/output.bmp"
+        img=gamma1_path+"/"+str(i)+"/output_txt.bmp"
         img=cv2.imread(img)
         img=cv2.resize(img,size)
         save.write(img)
