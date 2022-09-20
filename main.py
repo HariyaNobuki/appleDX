@@ -164,7 +164,7 @@ if __name__ == "__main__":
         makefiles(gamma1_path,str(i))
         savepath = gamma1_path + "/" + str(i)
         Gamma1(input_dict,i)
-        bat_file += "convert_color.exe chart_1_input.tif "+savepath+"/output.bmp "+savepath+"/conv_RBF.txt\n"
+        bat_file += "convert_color.exe apple_def.jpg"+savepath+"/output.bmp "+savepath+"/conv_RBF.txt\n"
     print("###FIN GAMMA1###")
 
     makefiles(init_path,"Gamma2")
@@ -174,7 +174,7 @@ if __name__ == "__main__":
         makefiles(gamma2_path,str(i))
         savepath = gamma2_path + "/" + str(i)
         Gamma2(input_dict,i)
-        bat_file += "convert_color.exe chart_1_input.tif "+savepath+"/output.bmp "+savepath+"/conv_RBF.txt\n"
+        bat_file += "convert_color.exe apple_def.jpg"+savepath+"/output.bmp "+savepath+"/conv_RBF.txt\n"
     print("###FIN GAMMA2###")
 
     makefiles(init_path,"Gamma3")
@@ -187,7 +187,7 @@ if __name__ == "__main__":
         makefiles(gamma3_path,str(i))
         savepath = gamma3_path + "/" + str(i)
         Gamma3(input_dict,gamma3_param1[count],gamma3_param2[count])
-        bat_file += "convert_color.exe chart_1_input.tif "+savepath+"/output.bmp "+savepath+"/conv_RBF.txt\n"
+        bat_file += "convert_color.exe apple_def.jpg"+savepath+"/output.bmp "+savepath+"/conv_RBF.txt\n"
         count+=1
     print("###FIN gamma3###")
     f = open(init_path + "/henkan.txt", "w")
